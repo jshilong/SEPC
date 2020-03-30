@@ -2,7 +2,7 @@
 
 
 
-By [Xinjiang Wang*], [Shilong Zhang*], [Zhuoran Yu], [Litong Feng], [Wei Zhang]
+By Xinjiang Wang*, Shilong Zhang*, Zhuoran Yu, Litong Feng, Wei Zhang.
 
 ## Introduction
 
