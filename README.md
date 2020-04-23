@@ -1,4 +1,4 @@
-# Scale-equalizing Pyramid Convolution for object detection
+# Scale-equalizing Pyramid Convolution for Object Detection
 
 
 
