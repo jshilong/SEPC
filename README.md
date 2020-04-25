@@ -1,5 +1,6 @@
 # Scale-equalizing Pyramid Convolution for Object Detection
 
+The paper will appear in arXiv soon, you can refer this url first https://drive.google.com/open?id=1sXnji68qrpe51sJ837wJ56hr3dcbUHB9
 
 
 By Xinjiang Wang*, Shilong Zhang*, Zhuoran Yu, Litong Feng, Wei Zhang.
