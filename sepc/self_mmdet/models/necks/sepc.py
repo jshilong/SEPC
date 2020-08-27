@@ -3,23 +3,23 @@ import torch.nn as nn
 import torch.nn.functional as F
 from mmdet.core import auto_fp16
 from mmdet.models.registry import NECKS
-from sepc.self_mmdet.ops.dcn.sepc_dconv import sepc_conv
 from torch.nn import init as init
+
+from sepc.self_mmdet.ops.dcn.sepc_dconv import sepc_conv
 
 
 @NECKS.register_module
 class SEPC(nn.Module):
-
-    def __init__(self,
-                 in_channels=[256] * 5,
-                 out_channels=256,
-                 num_outs=5,
-                 pconv_deform=False,
-                 lcconv_deform=False,
-                 iBN=False,
-                 Pconv_num=4,
-
-                 ):
+    def __init__(
+        self,
+        in_channels=[256] * 5,
+        out_channels=256,
+        num_outs=5,
+        pconv_deform=False,
+        lcconv_deform=False,
+        iBN=False,
+        Pconv_num=4,
+    ):
         super(SEPC, self).__init__()
         assert isinstance(in_channels, list)
         self.in_channels = in_channels
@@ -32,10 +32,22 @@ class SEPC(nn.Module):
         self.Pconvs = nn.ModuleList()
 
         for i in range(Pconv_num):
-            self.Pconvs.append(PConvModule(in_channels[i], out_channels, iBN=self.iBN, part_deform=pconv_deform))
+            self.Pconvs.append(
+                PConvModule(in_channels[i],
+                            out_channels,
+                            iBN=self.iBN,
+                            part_deform=pconv_deform))
 
-        self.lconv = sepc_conv(256, 256, kernel_size=3, dilation=1, part_deform=lcconv_deform)
-        self.cconv = sepc_conv(256, 256, kernel_size=3, dilation=1, part_deform=lcconv_deform)
+        self.lconv = sepc_conv(256,
+                               256,
+                               kernel_size=3,
+                               dilation=1,
+                               part_deform=lcconv_deform)
+        self.cconv = sepc_conv(256,
+                               256,
+                               kernel_size=3,
+                               dilation=1,
+                               part_deform=lcconv_deform)
         self.relu = nn.ReLU()
         if self.iBN:
             self.lbn = nn.BatchNorm2d(256)
@@ -44,8 +56,8 @@ class SEPC(nn.Module):
 
     # default init_weights for conv(msra) and norm in ConvModule
     def init_weights(self):
-        for str in ["l", "c"]:
-            m = getattr(self, str + "conv")
+        for str in ['l', 'c']:
+            m = getattr(self, str + 'conv')
             init.normal_(m.weight.data, 0, 0.01)
             if m.bias is not None:
                 m.bias.data.zero_()
@@ -66,30 +78,46 @@ class SEPC(nn.Module):
 
 
 class PConvModule(nn.Module):
-    def __init__(self,
-                 in_channels=256,
-                 out_channels=256,
-                 kernel_size=[3, 3, 3],
-                 dilation=[1, 1, 1],
-                 groups=[1, 1, 1],
-                 iBN=False,
-                 part_deform=False,
-
-                 ):
+    def __init__(
+        self,
+        in_channels=256,
+        out_channels=256,
+        kernel_size=[3, 3, 3],
+        dilation=[1, 1, 1],
+        groups=[1, 1, 1],
+        iBN=False,
+        part_deform=False,
+    ):
         super(PConvModule, self).__init__()
 
         #     assert not (bias and iBN)
         self.iBN = iBN
         self.Pconv = nn.ModuleList()
         self.Pconv.append(
-            sepc_conv(in_channels, out_channels, kernel_size=kernel_size[0], dilation=dilation[0], groups=groups[0],
-                      padding=(kernel_size[0] + (dilation[0] - 1) * 2) // 2, part_deform=part_deform))
+            sepc_conv(in_channels,
+                      out_channels,
+                      kernel_size=kernel_size[0],
+                      dilation=dilation[0],
+                      groups=groups[0],
+                      padding=(kernel_size[0] + (dilation[0] - 1) * 2) // 2,
+                      part_deform=part_deform))
         self.Pconv.append(
-            sepc_conv(in_channels, out_channels, kernel_size=kernel_size[1], dilation=dilation[1], groups=groups[1],
-                      padding=(kernel_size[1] + (dilation[1] - 1) * 2) // 2, part_deform=part_deform))
+            sepc_conv(in_channels,
+                      out_channels,
+                      kernel_size=kernel_size[1],
+                      dilation=dilation[1],
+                      groups=groups[1],
+                      padding=(kernel_size[1] + (dilation[1] - 1) * 2) // 2,
+                      part_deform=part_deform))
         self.Pconv.append(
-            sepc_conv(in_channels, out_channels, kernel_size=kernel_size[2], dilation=dilation[2], groups=groups[2],
-                      padding=(kernel_size[2] + (dilation[2] - 1) * 2) // 2, stride=2, part_deform=part_deform))
+            sepc_conv(in_channels,
+                      out_channels,
+                      kernel_size=kernel_size[2],
+                      dilation=dilation[2],
+                      groups=groups[2],
+                      padding=(kernel_size[2] + (dilation[2] - 1) * 2) // 2,
+                      stride=2,
+                      part_deform=part_deform))
 
         if self.iBN:
             self.bn = nn.BatchNorm2d(256)
@@ -111,8 +139,9 @@ class PConvModule(nn.Module):
             if level > 0:
                 temp_fea += self.Pconv[2](level, x[level - 1])
             if level < len(x) - 1:
-                temp_fea += F.upsample_bilinear(self.Pconv[0](level, x[level + 1]),
-                                                size=[temp_fea.size(2), temp_fea.size(3)])
+                temp_fea += F.upsample_bilinear(
+                    self.Pconv[0](level, x[level + 1]),
+                    size=[temp_fea.size(2), temp_fea.size(3)])
             next_x.append(temp_fea)
         if self.iBN:
             next_x = iBN(next_x, self.bn)

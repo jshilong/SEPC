@@ -13,7 +13,7 @@ activation_cfg = {
 
 
 def build_activation_layer(cfg):
-    """ Build activation layer
+    """Build activation layer.
 
     Args:
         cfg (dict): cfg should contain:

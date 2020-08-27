@@ -10,7 +10,7 @@ from ..registry import BACKBONES
 
 @BACKBONES.register_module
 class SSDVGG(VGG):
-    """VGG Backbone network for single-shot-detection
+    """VGG Backbone network for single-shot-detection.
 
     Args:
         input_size (int): width and height of input, from {300, 512}.

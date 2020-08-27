@@ -1,19 +1,20 @@
 import argparse
 import os
+import sys
 
 import mmcv
 import torch
 from mmcv.parallel import MMDataParallel, MMDistributedDataParallel
 from mmcv.runner import get_dist_info, init_dist, load_checkpoint
-from tools.fuse_conv_bn import fuse_module
-
 from mmdet.apis import multi_gpu_test, single_gpu_test
 from mmdet.core import wrap_fp16_model
 from mmdet.datasets import build_dataloader, build_dataset
 from mmdet.models import build_detector
-import sys
-sys.path.insert(0,"../..")
-from sepc.self_mmdet import *
+from tools.fuse_conv_bn import fuse_module
+
+from sepc.self_mmdet import *  # noqa F401
+
+sys.path.insert(0, '../..')
 
 
 class MultipleKVAction(argparse.Action):
@@ -22,7 +23,6 @@ class MultipleKVAction(argparse.Action):
     on the first = and append to a dictionary. List options should
     be passed as comma separated values, i.e KEY=V1,V2,V3
     """
-
     def _parse_int_float_bool(self, val):
         try:
             return int(val)
@@ -71,21 +71,21 @@ def parse_args():
         help='evaluation metrics, which depends on the dataset, e.g., "bbox",'
         ' "segm", "proposal" for COCO, and "mAP", "recall" for PASCAL VOC')
     parser.add_argument('--show', action='store_true', help='show results')
-    parser.add_argument(
-        '--gpu_collect',
-        action='store_true',
-        help='whether to use gpu to collect results.')
+    parser.add_argument('--gpu_collect',
+                        action='store_true',
+                        help='whether to use gpu to collect results.')
     parser.add_argument(
         '--tmpdir',
         help='tmp directory used for collecting results from multiple '
         'workers, available when gpu_collect is not specified')
-    parser.add_argument(
-        '--options', nargs='+', action=MultipleKVAction, help='custom options')
-    parser.add_argument(
-        '--launcher',
-        choices=['none', 'pytorch', 'slurm', 'mpi'],
-        default='none',
-        help='job launcher')
+    parser.add_argument('--options',
+                        nargs='+',
+                        action=MultipleKVAction,
+                        help='custom options')
+    parser.add_argument('--launcher',
+                        choices=['none', 'pytorch', 'slurm', 'mpi'],
+                        default='none',
+                        help='job launcher')
     parser.add_argument('--local_rank', type=int, default=0)
     args = parser.parse_args()
     if 'LOCAL_RANK' not in os.environ:
@@ -124,12 +124,11 @@ def main():
     # build the dataloader
     # TODO: support multiple images per gpu (only minor changes are needed)
     dataset = build_dataset(cfg.data.test)
-    data_loader = build_dataloader(
-        dataset,
-        imgs_per_gpu=1,
-        workers_per_gpu=cfg.data.workers_per_gpu,
-        dist=distributed,
-        shuffle=False)
+    data_loader = build_dataloader(dataset,
+                                   imgs_per_gpu=1,
+                                   workers_per_gpu=cfg.data.workers_per_gpu,
+                                   dist=distributed,
+                                   shuffle=False)
 
     # build the model and load checkpoint
     model = build_detector(cfg.model, train_cfg=None, test_cfg=cfg.test_cfg)

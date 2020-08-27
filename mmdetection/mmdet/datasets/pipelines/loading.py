@@ -44,7 +44,8 @@ class LoadImageFromFile(object):
 
 @PIPELINES.register_module
 class LoadMultiChannelImageFromFiles(object):
-    """ Load multi channel images from a list of separate channel files.
+    """Load multi channel images from a list of separate channel files.
+
     Expects results['filename'] to be a list of filenames
     """
 

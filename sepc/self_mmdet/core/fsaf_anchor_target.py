@@ -1,8 +1,8 @@
 from functools import partial
 
 import torch
-
 from mmdet.core.bbox import PseudoSampler, assign_and_sample, bbox2delta
+
 from sepc.self_mmdet.core.effective_area_assigner import EffectiveAreaAssigner
 
 
@@ -13,13 +13,13 @@ def multi_apply(func, *args, **kwargs):
 
 
 def unmap(data, count, inds, fill=0):
-    """ Unmap a subset of item (data) back to the original set of items (of
-    size count) """
+    """Unmap a subset of item (data) back to the original set of items (of size
+    count)"""
     if data.dim() == 1:
-        ret = data.new_full((count,), fill)
+        ret = data.new_full((count, ), fill)
         ret[inds] = data
     else:
-        new_size = (count,) + data.size()[1:]
+        new_size = (count, ) + data.size()[1:]
         ret = data.new_full(new_size, fill)
         ret[inds, :] = data
     return ret
@@ -27,9 +27,9 @@ def unmap(data, count, inds, fill=0):
 
 def build_fsaf_assigner(cfg, **kwargs):
     temp_cfg = cfg.copy()
-    type = temp_cfg.pop("type", None)
-    if type != "EffectiveAreaAssigner":
-        raise TypeError("fsaf only support EffectiveAreaAssigner")
+    type = temp_cfg.pop('type', None)
+    if type != 'EffectiveAreaAssigner':
+        raise TypeError('fsaf only support EffectiveAreaAssigner')
     return EffectiveAreaAssigner(**temp_cfg)
 
 
@@ -77,21 +77,21 @@ def fsaf_anchor_target(anchor_list,
     if gt_labels_list is None:
         gt_labels_list = [None for _ in range(num_imgs)]
     (all_labels, all_label_weights, all_bbox_targets, all_bbox_weights,
-     pos_inds_list, neg_inds_list, pos_assigned_gt_inds) = multi_apply(
-        anchor_target_single,
-        anchor_list,
-        valid_flag_list,
-        gt_bboxes_list,
-        gt_bboxes_ignore_list,
-        gt_labels_list,
-        img_metas,
-        target_means=target_means,
-        target_stds=target_stds,
-        cfg=cfg,
-        label_channels=label_channels,
-        sampling=sampling,
-        unmap_outputs=unmap_outputs,
-        encoder=encoder)
+     pos_inds_list, neg_inds_list,
+     pos_assigned_gt_inds) = multi_apply(anchor_target_single,
+                                         anchor_list,
+                                         valid_flag_list,
+                                         gt_bboxes_list,
+                                         gt_bboxes_ignore_list,
+                                         gt_labels_list,
+                                         img_metas,
+                                         target_means=target_means,
+                                         target_stds=target_stds,
+                                         cfg=cfg,
+                                         label_channels=label_channels,
+                                         sampling=sampling,
+                                         unmap_outputs=unmap_outputs,
+                                         encoder=encoder)
     # no valid anchors
     if any([labels is None for labels in all_labels]):
         return None
@@ -103,9 +103,11 @@ def fsaf_anchor_target(anchor_list,
     label_weights_list = images_to_levels(all_label_weights, num_level_anchors)
     bbox_targets_list = images_to_levels(all_bbox_targets, num_level_anchors)
     bbox_weights_list = images_to_levels(all_bbox_weights, num_level_anchors)
-    pos_assigned_gt_inds_list = images_to_levels(pos_assigned_gt_inds, num_level_anchors)
+    pos_assigned_gt_inds_list = images_to_levels(pos_assigned_gt_inds,
+                                                 num_level_anchors)
     return (labels_list, label_weights_list, bbox_targets_list,
-            bbox_weights_list, num_total_pos, num_total_neg, pos_assigned_gt_inds_list)
+            bbox_weights_list, num_total_pos, num_total_neg,
+            pos_assigned_gt_inds_list)
 
 
 def images_to_levels(target, num_level_anchors):
@@ -140,7 +142,7 @@ def anchor_target_single(flat_anchors,
                                        img_meta['img_shape'][:2],
                                        cfg.allowed_border)
     if not inside_flags.any():
-        return (None,) * 6
+        return (None, ) * 6
     # assign gt and sample anchors
     anchors = flat_anchors[inside_flags, :]
 
@@ -160,7 +162,8 @@ def anchor_target_single(flat_anchors,
     bbox_weights = torch.zeros_like(anchors)
     labels = anchors.new_zeros(num_valid_anchors, dtype=torch.long)
     label_weights = anchors.new_zeros(num_valid_anchors, dtype=torch.float)
-    pos_assigned_gt_inds = anchors.new_zeros(num_valid_anchors, dtype=torch.long) - 1
+    pos_assigned_gt_inds = anchors.new_zeros(num_valid_anchors,
+                                             dtype=torch.long) - 1
 
     pos_inds = sampling_result.pos_inds
     neg_inds = sampling_result.neg_inds
@@ -170,7 +173,8 @@ def anchor_target_single(flat_anchors,
                                           sampling_result.pos_gt_bboxes,
                                           target_means, target_stds)
         else:
-            pos_bbox_targets = encoder(sampling_result.pos_bboxes, sampling_result.pos_gt_bboxes)
+            pos_bbox_targets = encoder(sampling_result.pos_bboxes,
+                                       sampling_result.pos_gt_bboxes)
         bbox_targets[pos_inds, :] = pos_bbox_targets
         bbox_weights[pos_inds, :] = 1.0
         pos_assigned_gt_inds[pos_inds] = sampling_result.pos_assigned_gt_inds
@@ -192,22 +196,26 @@ def anchor_target_single(flat_anchors,
         label_weights = unmap(label_weights, num_total_anchors, inside_flags)
         bbox_targets = unmap(bbox_targets, num_total_anchors, inside_flags)
         bbox_weights = unmap(bbox_weights, num_total_anchors, inside_flags)
-        pos_assigned_gt_inds = unmap(pos_assigned_gt_inds, num_total_anchors,
-                                     inside_flags, fill=-1)
+        pos_assigned_gt_inds = unmap(pos_assigned_gt_inds,
+                                     num_total_anchors,
+                                     inside_flags,
+                                     fill=-1)
 
     return (labels, label_weights, bbox_targets, bbox_weights, pos_inds,
             neg_inds, pos_assigned_gt_inds)
 
 
-def anchor_inside_flags(flat_anchors, valid_flags, img_shape,
+def anchor_inside_flags(flat_anchors,
+                        valid_flags,
+                        img_shape,
                         allowed_border=0):
     img_h, img_w = img_shape[:2]
     if allowed_border >= 0:
         inside_flags = valid_flags & \
-                       (flat_anchors[:, 0] >= -allowed_border).type(torch.uint8) & \
-                       (flat_anchors[:, 1] >= -allowed_border).type(torch.uint8) & \
-                       (flat_anchors[:, 2] < img_w + allowed_border).type(torch.uint8) & \
-                       (flat_anchors[:, 3] < img_h + allowed_border).type(torch.uint8)
+            (flat_anchors[:, 0] >= -allowed_border).type(torch.uint8) & \
+            (flat_anchors[:, 1] >= -allowed_border).type(torch.uint8) & \
+            (flat_anchors[:, 2] < img_w + allowed_border).type(torch.uint8) & \
+            (flat_anchors[:, 3] < img_h + allowed_border).type(torch.uint8)
     else:
         inside_flags = valid_flags
     return inside_flags

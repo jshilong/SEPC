@@ -24,9 +24,8 @@ def reduce_mean(tensor):
 
 @HEADS.register_module
 class ATSSHead(AnchorHead):
-    """
-    Bridging the Gap Between Anchor-based and Anchor-free Detection via
-    Adaptive Training Sample Selection
+    """Bridging the Gap Between Anchor-based and Anchor-free Detection via
+    Adaptive Training Sample Selection.
 
     ATSS head structure is similar with FCOS, however ATSS use anchor boxes
     and assign label by Adaptive Training Sample Selection instead max-iou.
@@ -357,10 +356,8 @@ class ATSSHead(AnchorHead):
                     gt_labels_list=None,
                     label_channels=1,
                     unmap_outputs=True):
-        """
-        almost the same with anchor_target, with a little modification,
-        here we need return the anchor
-        """
+        """almost the same with anchor_target, with a little modification, here
+        we need return the anchor."""
         num_imgs = len(img_metas)
         assert len(anchor_list) == len(valid_flag_list) == num_imgs
 

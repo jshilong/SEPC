@@ -13,7 +13,7 @@ from ..registry import HEADS
 @HEADS.register_module
 class BBoxHead(nn.Module):
     """Simplest RoI head, with only two fc layers for classification and
-    regression respectively"""
+    regression respectively."""
 
     def __init__(self,
                  with_avg_pool=False,

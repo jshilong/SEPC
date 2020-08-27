@@ -10,8 +10,7 @@ from .anchor_head import AnchorHead
 
 @HEADS.register_module
 class RetinaHead(AnchorHead):
-    """
-    An anchor-based head used in [1]_.
+    """An anchor-based head used in [1]_.
 
     The head contains two subnetworks. The first classifies anchor boxes and
     the second regresses deltas for the anchors.

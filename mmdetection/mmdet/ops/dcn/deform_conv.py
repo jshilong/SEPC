@@ -374,7 +374,8 @@ class ModulatedDeformConv(nn.Module):
 
 
 class ModulatedDeformConvPack(ModulatedDeformConv):
-    """A ModulatedDeformable Conv Encapsulation that acts as normal Conv layers.
+    """A ModulatedDeformable Conv Encapsulation that acts as normal Conv
+    layers.
 
     Args:
         in_channels (int): Same as nn.Conv2d.

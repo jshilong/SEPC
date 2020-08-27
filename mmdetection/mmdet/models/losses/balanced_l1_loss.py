@@ -28,7 +28,7 @@ def balanced_l1_loss(pred,
 
 @LOSSES.register_module
 class BalancedL1Loss(nn.Module):
-    """Balanced L1 Loss
+    """Balanced L1 Loss.
 
     arXiv: https://arxiv.org/pdf/1904.02701.pdf (CVPR 2019)
     """

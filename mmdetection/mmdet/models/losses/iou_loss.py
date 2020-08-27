@@ -71,10 +71,8 @@ def bounded_iou_loss(pred, target, beta=0.2, eps=1e-3):
 
 @weighted_loss
 def giou_loss(pred, target, eps=1e-7):
-    """
-    Generalized Intersection over Union: A Metric and A Loss for
-    Bounding Box Regression
-    https://arxiv.org/abs/1902.09630
+    """Generalized Intersection over Union: A Metric and A Loss for Bounding
+    Box Regression https://arxiv.org/abs/1902.09630.
 
     code refer to:
     https://github.com/sfzhang15/ATSS/blob/master/atss_core/modeling/rpn/atss/loss.py#L36

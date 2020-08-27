@@ -3,7 +3,7 @@ from mmdet.models.registry import HEADS
 
 
 @HEADS.register_module
-class SelfFreeAnchorRetinaHead(FreeAnchorRetinaHead):
+class SepcFreeAnchorRetinaHead(FreeAnchorRetinaHead):
     def forward_single(self, x):
         if not isinstance(x, list):
             x = [x, x]

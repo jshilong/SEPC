@@ -761,16 +761,14 @@ class Albu(object):
                  keymap=None,
                  update_pad_shape=False,
                  skip_img_without_anno=False):
-        """
-        Adds custom transformations from Albumentations lib.
-        Please, visit `https://albumentations.readthedocs.io`
-        to get more information.
+        """Adds custom transformations from Albumentations lib. Please, visit
+        `https://albumentations.readthedocs.io` to get more information.
 
-        transforms (list): list of albu transformations
-        bbox_params (dict): bbox_params for albumentation `Compose`
-        keymap (dict): contains {'input key':'albumentation-style key'}
-        skip_img_without_anno (bool): whether to skip the image
-                                      if no ann left after aug
+        transforms (list): list of albu transformations bbox_params (dict):
+        bbox_params for albumentation `Compose` keymap (dict): contains {'input
+        key':'albumentation-style key'} skip_img_without_anno (bool): whether
+        to skip the image                               if no ann left after
+        aug
         """
         if Compose is None:
             raise RuntimeError('albumentations is not installed')
@@ -804,8 +802,8 @@ class Albu(object):
         self.keymap_back = {v: k for k, v in self.keymap_to_albu.items()}
 
     def albu_builder(self, cfg):
-        """Import a module from albumentations.
-        Inherits some of `build_from_cfg` logic.
+        """Import a module from albumentations. Inherits some of
+        `build_from_cfg` logic.
 
         Args:
             cfg (dict): Config dict. It should at least contain the key "type".
@@ -837,9 +835,7 @@ class Albu(object):
 
     @staticmethod
     def mapper(d, keymap):
-        """
-        Dictionary mapper.
-        Renames keys according to keymap provided.
+        """Dictionary mapper. Renames keys according to keymap provided.
 
         Args:
             d (dict): old dict

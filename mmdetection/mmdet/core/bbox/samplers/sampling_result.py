@@ -52,8 +52,7 @@ class SamplingResult(util_mixins.NiceRepr):
         return torch.cat([self.pos_bboxes, self.neg_bboxes])
 
     def to(self, device):
-        """
-        Change the device of the data inplace.
+        """Change the device of the data inplace.
 
         Example:
             >>> self = SamplingResult.random()
@@ -77,9 +76,7 @@ class SamplingResult(util_mixins.NiceRepr):
 
     @property
     def info(self):
-        """
-        Returns a dictionary of info about the object
-        """
+        """Returns a dictionary of info about the object."""
         return {
             'pos_inds': self.pos_inds,
             'neg_inds': self.neg_inds,

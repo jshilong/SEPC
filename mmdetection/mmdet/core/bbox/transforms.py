@@ -37,8 +37,7 @@ def delta2bbox(rois,
                stds=[1, 1, 1, 1],
                max_shape=None,
                wh_ratio_clip=16 / 1000):
-    """
-    Apply deltas to shift/scale base boxes.
+    """Apply deltas to shift/scale base boxes.
 
     Typically the rois are anchor or proposed bounding boxes and the deltas are
     network outputs used to shift/scale those boxes.
@@ -132,7 +131,7 @@ def bbox_flip(bboxes, img_shape):
 
 
 def bbox_mapping(bboxes, img_shape, scale_factor, flip):
-    """Map bboxes from the original image scale to testing scale"""
+    """Map bboxes from the original image scale to testing scale."""
     new_bboxes = bboxes * scale_factor
     if flip:
         new_bboxes = bbox_flip(new_bboxes, img_shape)
@@ -140,7 +139,7 @@ def bbox_mapping(bboxes, img_shape, scale_factor, flip):
 
 
 def bbox_mapping_back(bboxes, img_shape, scale_factor, flip):
-    """Map bboxes from testing scale to original image scale"""
+    """Map bboxes from testing scale to original image scale."""
     new_bboxes = bbox_flip(bboxes, img_shape) if flip else bboxes
     new_bboxes = new_bboxes / scale_factor
     return new_bboxes

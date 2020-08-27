@@ -6,7 +6,7 @@ from .carafe import CARAFEPack
 
 
 class PixelShufflePack(nn.Module):
-    """ Pixel Shuffle upsample layer
+    """Pixel Shuffle upsample layer.
 
     Args:
         in_channels (int): Number of input channels
@@ -52,7 +52,7 @@ upsample_cfg = {
 
 
 def build_upsample_layer(cfg):
-    """ Build upsample layer
+    """Build upsample layer.
 
     Args:
         cfg (dict): cfg should contain:

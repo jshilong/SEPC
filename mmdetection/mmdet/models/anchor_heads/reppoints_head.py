@@ -162,8 +162,8 @@ class RepPointsHead(nn.Module):
         normal_init(self.reppoints_pts_refine_out, std=0.01)
 
     def points2bbox(self, pts, y_first=True):
-        """
-        Converting the points set into bounding box.
+        """Converting the points set into bounding box.
+
         :param pts: the input points sets (fields), each points
             set (fields) is represented as 2n scalar.
         :param y_first: if y_fisrt=True, the point set is represented as
@@ -213,9 +213,9 @@ class RepPointsHead(nn.Module):
         return bbox
 
     def gen_grid_from_reg(self, reg, previous_boxes):
-        """
-        Base on the previous bboxes and regression values, we compute the
-            regressed bboxes and generate the grids on the bboxes.
+        """Base on the previous bboxes and regression values, we compute the
+        regressed bboxes and generate the grids on the bboxes.
+
         :param reg: the regression value to previous bboxes.
         :param previous_boxes: previous bboxes.
         :return: generate grids on the regressed bboxes.
@@ -331,7 +331,9 @@ class RepPointsHead(nn.Module):
         return points_list, valid_flag_list
 
     def centers_to_bboxes(self, point_list):
-        """Get bboxes according to center points. Only used in MaxIOUAssigner.
+        """Get bboxes according to center points.
+
+        Only used in MaxIOUAssigner.
         """
         bbox_list = []
         for i_img, point in enumerate(point_list):
@@ -347,8 +349,7 @@ class RepPointsHead(nn.Module):
         return bbox_list
 
     def offset_to_pts(self, center_list, pred_list):
-        """Change from point offset to point coordinate.
-        """
+        """Change from point offset to point coordinate."""
         pts_list = []
         for i_lvl in range(len(self.point_strides)):
             pts_lvl = []

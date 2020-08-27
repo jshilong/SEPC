@@ -88,7 +88,7 @@ def flops_to_string(flops, units='GMac', precision=2):
 
 
 def params_to_string(params_num):
-    """converting number to string
+    """converting number to string.
 
     :param float params_num: number
     :returns str: number
@@ -175,9 +175,9 @@ def add_flops_counting_methods(net_main_module):
 
 
 def compute_average_flops_cost(self):
-    """
-    A method that will be available after add_flops_counting_methods() is
+    """A method that will be available after add_flops_counting_methods() is
     called on a desired net object.
+
     Returns current mean flops consumption per image.
     """
 
@@ -191,31 +191,31 @@ def compute_average_flops_cost(self):
 
 
 def start_flops_count(self):
-    """
-    A method that will be available after add_flops_counting_methods() is
+    """A method that will be available after add_flops_counting_methods() is
     called on a desired net object.
-    Activates the computation of mean flops consumption per image.
-    Call it before you run the network.
+
+    Activates the computation of mean flops consumption per image. Call it
+    before you run the network.
     """
     add_batch_counter_hook_function(self)
     self.apply(add_flops_counter_hook_function)
 
 
 def stop_flops_count(self):
-    """
-    A method that will be available after add_flops_counting_methods() is
+    """A method that will be available after add_flops_counting_methods() is
     called on a desired net object.
-    Stops computing the mean flops consumption per image.
-    Call whenever you want to pause the computation.
+
+    Stops computing the mean flops consumption per image. Call whenever you
+    want to pause the computation.
     """
     remove_batch_counter_hook_function(self)
     self.apply(remove_flops_counter_hook_function)
 
 
 def reset_flops_count(self):
-    """
-    A method that will be available after add_flops_counting_methods() is
+    """A method that will be available after add_flops_counting_methods() is
     called on a desired net object.
+
     Resets statistics computed so far.
     """
     add_batch_counter_variables_or_reset(self)

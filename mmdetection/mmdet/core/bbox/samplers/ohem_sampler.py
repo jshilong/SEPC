@@ -5,8 +5,7 @@ from .base_sampler import BaseSampler
 
 
 class OHEMSampler(BaseSampler):
-    """
-    Online Hard Example Mining Sampler described in [1]_.
+    """Online Hard Example Mining Sampler described in [1]_.
 
     References:
         .. [1] https://arxiv.org/pdf/1604.03540.pdf

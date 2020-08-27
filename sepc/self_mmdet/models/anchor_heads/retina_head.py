@@ -1,8 +1,9 @@
 from mmdet.models.anchor_heads import RetinaHead
 from mmdet.models.registry import HEADS
 
+
 @HEADS.register_module
-class SelfRetinaHead(RetinaHead):
+class SepcRetinaHead(RetinaHead):
     def forward_single(self, x):
         if not isinstance(x, list):
             x = [x, x]

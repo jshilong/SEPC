@@ -7,9 +7,7 @@ from mmdet.models.bbox_heads import BBoxHead
 
 
 def test_anchor_head_loss():
-    """
-    Tests anchor head loss when truth is empty and non-empty
-    """
+    """Tests anchor head loss when truth is empty and non-empty."""
     self = AnchorHead(num_classes=4, in_channels=1)
     s = 256
     img_metas = [{
@@ -75,9 +73,7 @@ def test_anchor_head_loss():
 
 
 def test_bbox_head_loss():
-    """
-    Tests bbox head loss when truth is empty and non-empty
-    """
+    """Tests bbox head loss when truth is empty and non-empty."""
     self = BBoxHead(in_channels=8, roi_feat_size=3)
 
     num_imgs = 1
@@ -91,9 +87,7 @@ def test_bbox_head_loss():
     target_cfg = mmcv.Config({'pos_weight': 1})
 
     def _dummy_bbox_sampling(proposal_list, gt_bboxes, gt_labels):
-        """
-        Create sample results that can be passed to BBoxHead.get_target
-        """
+        """Create sample results that can be passed to BBoxHead.get_target."""
         assign_config = {
             'type': 'MaxIoUAssigner',
             'pos_iou_thr': 0.5,
@@ -172,11 +166,9 @@ def test_bbox_head_loss():
 
 
 def test_refine_boxes():
-    """
-    Mirrors the doctest in
+    """Mirrors the doctest in
     ``mmdet.models.bbox_heads.bbox_head.BBoxHead.refine_boxes`` but checks for
-    multiple values of n_roi / n_img.
-    """
+    multiple values of n_roi / n_img."""
     self = BBoxHead(reg_class_agnostic=True)
 
     test_settings = [
@@ -297,10 +289,8 @@ def test_refine_boxes():
 
 
 def _demodata_refine_boxes(n_roi, n_img, rng=0):
-    """
-    Create random test data for the
-    ``mmdet.models.bbox_heads.bbox_head.BBoxHead.refine_boxes`` method
-    """
+    """Create random test data for the
+    ``mmdet.models.bbox_heads.bbox_head.BBoxHead.refine_boxes`` method."""
     import numpy as np
     from mmdet.core.bbox.demodata import random_boxes
     from mmdet.core.bbox.demodata import ensure_rng

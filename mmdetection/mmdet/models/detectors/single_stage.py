@@ -42,8 +42,7 @@ class SingleStageDetector(BaseDetector):
         self.bbox_head.init_weights()
 
     def extract_feat(self, img):
-        """Directly extract features from the backbone+neck
-        """
+        """Directly extract features from the backbone+neck."""
         x = self.backbone(img)
         if self.with_neck:
             x = self.neck(x)

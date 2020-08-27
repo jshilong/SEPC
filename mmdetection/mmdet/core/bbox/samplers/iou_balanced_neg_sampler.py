@@ -5,7 +5,7 @@ from .random_sampler import RandomSampler
 
 
 class IoUBalancedNegSampler(RandomSampler):
-    """IoU Balanced Sampling
+    """IoU Balanced Sampling.
 
     arXiv: https://arxiv.org/pdf/1904.02701.pdf (CVPR 2019)
 

@@ -98,8 +98,9 @@ class Bottleneck(nn.Module):
                  gcb=None,
                  gen_attention=None):
         """Bottleneck block for ResNet.
-        If style is "pytorch", the stride-two layer is the 3x3 conv layer,
-        if it is "caffe", the stride-two layer is the first 1x1 conv layer.
+
+        If style is "pytorch", the stride-two layer is the 3x3 conv layer, if
+        it is "caffe", the stride-two layer is the first 1x1 conv layer.
         """
         super(Bottleneck, self).__init__()
         assert style in ['pytorch', 'caffe']

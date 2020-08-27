@@ -212,8 +212,7 @@ class AnchorHead(nn.Module):
                    img_metas,
                    cfg,
                    rescale=False):
-        """
-        Transform network output for a batch into labeled boxes.
+        """Transform network output for a batch into labeled boxes.
 
         Args:
             cls_scores (list[Tensor]): Box scores for each scale level
@@ -285,9 +284,7 @@ class AnchorHead(nn.Module):
                           scale_factor,
                           cfg,
                           rescale=False):
-        """
-        Transform outputs for a single batch item into labeled boxes.
-        """
+        """Transform outputs for a single batch item into labeled boxes."""
         assert len(cls_score_list) == len(bbox_pred_list) == len(mlvl_anchors)
         mlvl_bboxes = []
         mlvl_scores = []

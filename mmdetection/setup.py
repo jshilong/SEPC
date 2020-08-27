@@ -111,8 +111,7 @@ def make_cuda_ext(name, module, sources):
 
 
 def parse_requirements(fname='requirements.txt', with_version=True):
-    """
-    Parse the package dependencies listed in a requirements file but strips
+    """Parse the package dependencies listed in a requirements file but strips
     specific versioning information.
 
     Args:
@@ -131,9 +130,7 @@ def parse_requirements(fname='requirements.txt', with_version=True):
     require_fpath = fname
 
     def parse_line(line):
-        """
-        Parse information from a line in a requirements text file
-        """
+        """Parse information from a line in a requirements text file."""
         if line.startswith('-r '):
             # Allow specifying requirements in other files
             target = line.split(' ')[1]

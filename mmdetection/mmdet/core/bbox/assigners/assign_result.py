@@ -4,8 +4,7 @@ from mmdet.utils import util_mixins
 
 
 class AssignResult(util_mixins.NiceRepr):
-    """
-    Stores assignments between predicted and truth boxes.
+    """Stores assignments between predicted and truth boxes.
 
     Attributes:
         num_gts (int): the number of truth boxes considered when computing this
@@ -48,16 +47,12 @@ class AssignResult(util_mixins.NiceRepr):
 
     @property
     def num_preds(self):
-        """
-        Return the number of predictions in this assignment
-        """
+        """Return the number of predictions in this assignment."""
         return len(self.gt_inds)
 
     @property
     def info(self):
-        """
-        Returns a dictionary of info about the object
-        """
+        """Returns a dictionary of info about the object."""
         return {
             'num_gts': self.num_gts,
             'num_preds': self.num_preds,
@@ -67,9 +62,7 @@ class AssignResult(util_mixins.NiceRepr):
         }
 
     def __nice__(self):
-        """
-        Create a "nice" summary string describing this assign result
-        """
+        """Create a "nice" summary string describing this assign result."""
         parts = []
         parts.append('num_gts={!r}'.format(self.num_gts))
         if self.gt_inds is None:
@@ -90,8 +83,7 @@ class AssignResult(util_mixins.NiceRepr):
 
     @classmethod
     def random(cls, **kwargs):
-        """
-        Create random AssignResult for tests or debugging.
+        """Create random AssignResult for tests or debugging.
 
         Kwargs:
             num_preds: number of predicted boxes

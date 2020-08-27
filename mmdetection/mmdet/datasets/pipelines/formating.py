@@ -140,8 +140,7 @@ class DefaultFormatBundle(object):
 
 @PIPELINES.register_module
 class Collect(object):
-    """
-    Collect data from the loader relevant to the specific task.
+    """Collect data from the loader relevant to the specific task.
 
     This is usually the last stage of the data loader pipeline. Typically keys
     is set to some subset of "img", "proposals", "gt_bboxes",
@@ -194,8 +193,7 @@ class Collect(object):
 
 @PIPELINES.register_module
 class WrapFieldsToLists(object):
-    """
-    Wrap fields of the data dictionary into lists for evaluation.
+    """Wrap fields of the data dictionary into lists for evaluation.
 
     This class can be used as a last step of a test or validation
     pipeline for single image evaluation or inference.
