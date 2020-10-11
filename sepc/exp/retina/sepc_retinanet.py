@@ -25,7 +25,7 @@ model = dict(
             iBN=True,  # when open, please set imgs/gpu >= 4
         )
     ],
-    bbox_head=dict(type='SelfRetinaHead',
+    bbox_head=dict(type='SepcRetinaHead',
                    num_classes=81,
                    in_channels=256,
                    stacked_convs=0,
