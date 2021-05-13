@@ -1,4 +1,4 @@
-# [Scale-equalizing Pyramid Convolution for Object Detection](https://arxiv.org/abs/2005.03101)
+# [Scale-equalizing Pyramid Convolution for Object Detection(CVPR2020)](https://arxiv.org/abs/2005.03101)
 By Xinjiang Wang*, Shilong Zhang*, Zhuoran Yu, Litong Feng, Wei Zhang.
 
 ## Introduction
