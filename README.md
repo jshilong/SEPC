@@ -34,10 +34,11 @@ The results on COCO 2017 val is shown in the below table.
 ## Citations
 Please cite our paper in your publications if it helps your research:
 ```
-@inproceedings{wang2020SEPC,
-  title     =  {Scale-equalizing Pyramid Convolution for object detection},
-  author    =  {Wang, Xinjiang and Zhang, Shilong and Yu, Zhuoran and Feng, Litong and Zhang, Wei},
-  booktitle =  {CVPR},
-  year      =  {2020}
+@InProceedings{Wang_2020_CVPR,
+author = {Wang, Xinjiang and Zhang, Shilong and Yu, Zhuoran and Feng, Litong and Zhang, Wayne},
+title = {Scale-Equalizing Pyramid Convolution for Object Detection},
+booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+month = {June},
+year = {2020}
 }
 ```
